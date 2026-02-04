@@ -5,13 +5,15 @@ export interface Place {
   lat: number;
   lng: number;
   address?: string;
-  city: string;
+  city?: string;
   citySlug: string;
   accessible?: boolean;
+  accessibility?: boolean;
   openHours?: string;
+  openingHours?: string;
   isPublic?: boolean;
   description?: string;
-  osmId?: string;
+  osmId?: number | string;
   slug: string;
 }
 

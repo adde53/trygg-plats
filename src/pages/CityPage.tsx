@@ -4,14 +4,16 @@ import { Footer } from '@/components/Footer';
 import { MapView } from '@/components/MapView';
 import { PlaceCard } from '@/components/PlaceCard';
 import { SearchBar } from '@/components/SearchBar';
-import { getCityBySlug, getPlacesByCity, City } from '@/data/places';
-import { ChevronRight, MapPin } from 'lucide-react';
+import { getCityBySlug } from '@/data/places';
+import { usePlaces, useCityInfo } from '@/hooks/usePlaces';
+import { ChevronRight, MapPin, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function CityPage() {
   const { citySlug } = useParams<{ citySlug: string }>();
   const city = citySlug ? getCityBySlug(citySlug) : undefined;
-  const places = citySlug ? getPlacesByCity(citySlug) : [];
+  const cityInfo = citySlug ? useCityInfo(citySlug) : null;
+  const { data: places = [], isLoading } = usePlaces(citySlug);
 
   if (!city) {
     return (
@@ -73,8 +75,14 @@ export default function CityPage() {
               </h1>
               
               <p className="text-lg text-muted-foreground mb-8">
-                Hitta {places.length > 0 ? places.length : city.count} amningsrum och skötrum i {city.name}. 
-                Använd kartan eller listan nedan för att hitta närmaste plats.
+                {isLoading ? (
+                  <span className="inline-flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Hämtar platser från OpenStreetMap...
+                  </span>
+                ) : (
+                  <>Hitta {places.length} amningsrum och skötrum i {city.name}. Använd kartan eller listan nedan för att hitta närmaste plats.</>
+                )}
               </p>
               
               <SearchBar 
@@ -110,11 +118,20 @@ export default function CityPage() {
                     Alla platser
                   </h2>
                   <span className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full">
-                    {places.length} platser
+                    {isLoading ? 'Laddar...' : `${places.length} platser`}
                   </span>
                 </div>
                 
-                {places.length > 0 ? (
+                {isLoading ? (
+                  <div className="space-y-3">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="bg-muted rounded-2xl p-6 animate-pulse">
+                        <div className="h-4 bg-muted-foreground/20 rounded w-3/4 mb-2"></div>
+                        <div className="h-3 bg-muted-foreground/20 rounded w-1/2"></div>
+                      </div>
+                    ))}
+                  </div>
+                ) : places.length > 0 ? (
                   <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
                     {places.map((place, index) => (
                       <PlaceCard key={place.id} place={place} index={index} />
@@ -123,7 +140,7 @@ export default function CityPage() {
                 ) : (
                   <div className="bg-muted rounded-2xl p-8 text-center">
                     <p className="text-muted-foreground">
-                      Inga platser hittades i {city.name} ännu.
+                      Inga platser hittades i {city.name} ännu. Data hämtas från OpenStreetMap.
                     </p>
                   </div>
                 )}

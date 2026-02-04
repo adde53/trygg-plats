@@ -4,12 +4,14 @@ import { SearchBar } from '@/components/SearchBar';
 import { CityCard } from '@/components/CityCard';
 import { MapView } from '@/components/MapView';
 import { FAQ } from '@/components/FAQ';
-import { cities, mockPlaces } from '@/data/places';
+import { cities } from '@/data/places';
+import { usePlaces } from '@/hooks/usePlaces';
 import { motion } from 'framer-motion';
-import { MapPin, Baby, Shield, Clock } from 'lucide-react';
+import { MapPin, Baby, Shield, Clock, Loader2 } from 'lucide-react';
 import heroImage from '@/assets/hero-illustration.png';
 
 const Index = () => {
+  const { data: places = [], isLoading } = usePlaces();
   return (
     <>
       <Header />
@@ -34,7 +36,7 @@ const Index = () => {
               <div className="inline-flex items-center gap-2 bg-card rounded-full px-4 py-2 shadow-soft mb-6">
                 <span className="text-xl">👶</span>
                 <span className="text-sm font-medium text-muted-foreground">
-                  {mockPlaces.length}+ platser i hela Sverige
+                  {isLoading ? 'Laddar...' : `${places.length}+ platser i hela Sverige`}
                 </span>
               </div>
               
@@ -96,9 +98,18 @@ const Index = () => {
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
+              className="relative"
             >
+              {isLoading && (
+                <div className="absolute inset-0 bg-background/50 backdrop-blur-sm rounded-2xl flex items-center justify-center z-10">
+                  <div className="flex items-center gap-3 bg-card px-4 py-2 rounded-full shadow-soft">
+                    <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                    <span className="text-sm font-medium">Hämtar platser från OpenStreetMap...</span>
+                  </div>
+                </div>
+              )}
               <MapView 
-                places={mockPlaces} 
+                places={places} 
                 center={[59.3293, 18.0686]} 
                 zoom={6}
                 height="500px"

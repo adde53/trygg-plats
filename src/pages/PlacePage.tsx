@@ -49,7 +49,7 @@ export default function PlacePage() {
   };
 
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}`;
-  const osmUrl = `https://www.openstreetmap.org/${place.osmId?.replace('/', '/')}`;
+  const osmUrl = place.osmId ? `https://www.openstreetmap.org/node/${place.osmId}` : 'https://www.openstreetmap.org';
 
   return (
     <>
