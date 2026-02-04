@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -7,13 +7,17 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { MapPin, Navigation } from 'lucide-react';
 
-// Fix for default markers
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-});
+// Fix for default markers in react-leaflet
+const fixDefaultIcon = () => {
+  delete (L.Icon.Default.prototype as any)._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+  });
+};
+
+fixDefaultIcon();
 
 // Custom icons for different place types
 const createCustomIcon = (type: Place['type']) => {
@@ -60,7 +64,8 @@ interface MapViewProps {
   showUserLocation?: boolean;
 }
 
-function MapController({ center, zoom }: { center: [number, number]; zoom: number }) {
+// Component to handle map updates
+function MapUpdater({ center, zoom }: { center: [number, number]; zoom: number }) {
   const map = useMap();
   
   useEffect(() => {
@@ -68,6 +73,35 @@ function MapController({ center, zoom }: { center: [number, number]; zoom: numbe
   }, [center, zoom, map]);
   
   return null;
+}
+
+// Component to handle user location
+function LocationButton({ map }: { map: L.Map | null }) {
+  const handleLocate = useCallback(() => {
+    if (navigator.geolocation && map) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          map.setView([latitude, longitude], 14);
+        },
+        (error) => {
+          console.error('Geolocation error:', error);
+        }
+      );
+    }
+  }, [map]);
+
+  return (
+    <Button
+      variant="secondary"
+      size="icon"
+      className="absolute bottom-4 right-4 z-[1000] shadow-card bg-card hover:bg-muted"
+      onClick={handleLocate}
+      aria-label="Visa min position"
+    >
+      <Navigation className="h-5 w-5" />
+    </Button>
+  );
 }
 
 export function MapView({ 
@@ -78,36 +112,22 @@ export function MapView({
   height = "400px",
   showUserLocation = false
 }: MapViewProps) {
-  const mapRef = useRef<L.Map>(null);
-
-  const handleLocateUser = () => {
-    if (navigator.geolocation && mapRef.current) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          mapRef.current?.setView([latitude, longitude], 14);
-        },
-        (error) => {
-          console.error('Geolocation error:', error);
-        }
-      );
-    }
-  };
+  const [map, setMap] = useState<L.Map | null>(null);
 
   return (
     <div className={`relative map-container ${className}`} style={{ height }}>
       <MapContainer
-        ref={mapRef}
         center={center}
         zoom={zoom}
         className="h-full w-full rounded-2xl"
         scrollWheelZoom={true}
+        ref={setMap}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <MapController center={center} zoom={zoom} />
+        <MapUpdater center={center} zoom={zoom} />
         
         {places.map((place) => (
           <Marker
@@ -119,11 +139,11 @@ export function MapView({
               <div className="p-1 min-w-[200px]">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-lg">{getPlaceTypeEmoji(place.type)}</span>
-                  <span className="text-xs font-medium text-primary bg-sage-light px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground">
                     {getPlaceTypeLabel(place.type)}
                   </span>
                 </div>
-                <h3 className="font-display font-bold text-foreground mb-1">
+                <h3 className="font-bold text-foreground mb-1">
                   {place.name}
                 </h3>
                 {place.address && (
@@ -143,16 +163,8 @@ export function MapView({
         ))}
       </MapContainer>
       
-      {showUserLocation && (
-        <Button
-          variant="secondary"
-          size="icon"
-          className="absolute bottom-4 right-4 z-[1000] shadow-card"
-          onClick={handleLocateUser}
-          aria-label="Visa min position"
-        >
-          <Navigation className="h-5 w-5" />
-        </Button>
+      {showUserLocation && map && (
+        <LocationButton map={map} />
       )}
     </div>
   );
