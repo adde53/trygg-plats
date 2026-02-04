@@ -2,87 +2,137 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Amningsrum.se Design System
+   A calming, nurturing design for parents
+   Colors: Soft sage greens, warm peach, cream backgrounds
 */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Warm cream background */
+    --background: 40 33% 98%;
+    --foreground: 160 25% 20%;
 
+    /* Soft sage card */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 160 25% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 160 25% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Calming sage green - primary */
+    --primary: 160 35% 45%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Warm peach - secondary */
+    --secondary: 25 80% 92%;
+    --secondary-foreground: 25 50% 35%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Soft muted tones */
+    --muted: 160 15% 94%;
+    --muted-foreground: 160 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - soft coral */
+    --accent: 15 70% 60%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 160 20% 88%;
+    --input: 160 20% 88%;
+    --ring: 160 35% 45%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Custom colors for the site */
+    --sage: 160 35% 45%;
+    --sage-light: 160 30% 92%;
+    --sage-dark: 160 40% 30%;
+    
+    --peach: 25 80% 92%;
+    --peach-dark: 25 60% 75%;
+    
+    --coral: 15 70% 60%;
+    --coral-light: 15 70% 90%;
+    
+    --cream: 40 33% 98%;
+    --cream-dark: 40 25% 92%;
+    
+    --sky: 200 60% 94%;
+    --sky-dark: 200 50% 50%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(160 30% 92%) 0%, hsl(25 80% 95%) 50%, hsl(200 60% 96%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(160 20% 98%) 100%);
+    --gradient-button: linear-gradient(135deg, hsl(160 35% 45%) 0%, hsl(160 40% 38%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(160 30% 50% / 0.15);
+    --shadow-card: 0 8px 30px -8px hsl(160 30% 40% / 0.12);
+    --shadow-elevated: 0 20px 50px -15px hsl(160 30% 40% / 0.2);
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 160 20% 8%;
+    --foreground: 40 20% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 160 20% 12%;
+    --card-foreground: 40 20% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 160 20% 12%;
+    --popover-foreground: 40 20% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 160 40% 55%;
+    --primary-foreground: 160 30% 10%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 25 30% 20%;
+    --secondary-foreground: 25 50% 85%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 160 15% 18%;
+    --muted-foreground: 160 15% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 15 50% 50%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62.8% 50%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 160 15% 20%;
+    --input: 160 15% 20%;
+    --ring: 160 40% 55%;
+
+    --sage: 160 40% 55%;
+    --sage-light: 160 25% 20%;
+    --sage-dark: 160 45% 70%;
+    
+    --peach: 25 30% 25%;
+    --peach-dark: 25 50% 60%;
+    
+    --coral: 15 60% 55%;
+    --coral-light: 15 40% 25%;
+    
+    --cream: 160 20% 8%;
+    --cream-dark: 160 18% 15%;
+    
+    --sky: 200 30% 18%;
+    --sky-dark: 200 50% 60%;
+
+    --gradient-hero: linear-gradient(135deg, hsl(160 25% 12%) 0%, hsl(25 20% 15%) 50%, hsl(200 25% 15%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(160 20% 12%) 0%, hsl(160 18% 10%) 100%);
+    --gradient-button: linear-gradient(135deg, hsl(160 40% 55%) 0%, hsl(160 45% 45%) 100%);
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -99,7 +149,178 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: 'Nunito', system-ui, sans-serif;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Quicksand', system-ui, sans-serif;
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .card-gradient {
+    background: var(--gradient-card);
+  }
+
+  .btn-gradient {
+    background: var(--gradient-button);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+
+  /* Icon badge styles */
+  .icon-badge {
+    @apply inline-flex items-center justify-center rounded-full p-3;
+  }
+
+  .icon-badge-nursing {
+    @apply bg-peach text-peach-foreground;
+  }
+
+  .icon-badge-changing {
+    @apply bg-sky text-sky-foreground;
+  }
+
+  /* Map container */
+  .map-container {
+    @apply rounded-2xl overflow-hidden shadow-card;
+  }
+
+  /* Search input styling */
+  .search-input {
+    @apply bg-card border-2 border-sage-light rounded-2xl px-6 py-4 text-lg shadow-soft transition-all duration-300;
+  }
+
+  .search-input:focus {
+    @apply border-primary ring-4 ring-primary/10 outline-none;
+  }
+
+  /* City card */
+  .city-card {
+    @apply bg-card rounded-2xl p-6 shadow-card transition-all duration-300 hover:shadow-elevated hover:-translate-y-1;
+  }
+
+  /* Place card */
+  .place-card {
+    @apply bg-card rounded-xl p-4 shadow-soft border border-border/50 transition-all duration-200 hover:shadow-card hover:border-primary/30;
+  }
+
+  /* FAQ accordion */
+  .faq-item {
+    @apply bg-card rounded-xl border border-border/50 overflow-hidden;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-sage {
+    background-color: hsl(var(--sage));
+  }
+
+  .bg-sage-light {
+    background-color: hsl(var(--sage-light));
+  }
+
+  .bg-peach {
+    background-color: hsl(var(--peach));
+  }
+
+  .bg-coral {
+    background-color: hsl(var(--coral));
+  }
+
+  .bg-coral-light {
+    background-color: hsl(var(--coral-light));
+  }
+
+  .bg-cream {
+    background-color: hsl(var(--cream));
+  }
+
+  .bg-cream-dark {
+    background-color: hsl(var(--cream-dark));
+  }
+
+  .bg-sky {
+    background-color: hsl(var(--sky));
+  }
+
+  .text-sage {
+    color: hsl(var(--sage));
+  }
+
+  .text-sage-dark {
+    color: hsl(var(--sage-dark));
+  }
+
+  .text-coral {
+    color: hsl(var(--coral));
+  }
+
+  .text-sky-dark {
+    color: hsl(var(--sky-dark));
+  }
+
+  .border-sage-light {
+    border-color: hsl(var(--sage-light));
+  }
+}
+
+/* Leaflet map overrides */
+.leaflet-container {
+  font-family: 'Nunito', system-ui, sans-serif;
+  border-radius: 1rem;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+}
+
+.leaflet-popup-content {
+  margin: 1rem;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.5);
 }
