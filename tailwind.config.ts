@@ -54,26 +54,33 @@ export default {
         sage: {
           DEFAULT: "hsl(var(--sage))",
           light: "hsl(var(--sage-light))",
+          medium: "hsl(var(--sage-medium))",
           dark: "hsl(var(--sage-dark))",
         },
         peach: {
           DEFAULT: "hsl(var(--peach))",
+          medium: "hsl(var(--peach-medium))",
           dark: "hsl(var(--peach-dark))",
-          foreground: "hsl(25 50% 35%)",
+          foreground: "hsl(24 60% 30%)",
         },
         coral: {
           DEFAULT: "hsl(var(--coral))",
           light: "hsl(var(--coral-light))",
+          medium: "hsl(var(--coral-medium))",
         },
         cream: {
           DEFAULT: "hsl(var(--cream))",
+          medium: "hsl(var(--cream-medium))",
           dark: "hsl(var(--cream-dark))",
         },
         sky: {
           DEFAULT: "hsl(var(--sky))",
+          medium: "hsl(var(--sky-medium))",
           dark: "hsl(var(--sky-dark))",
-          foreground: "hsl(200 50% 35%)",
+          foreground: "hsl(202 50% 35%)",
         },
+        mint: "hsl(var(--mint))",
+        lavender: "hsl(var(--lavender))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -93,9 +100,11 @@ export default {
         "3xl": "2rem",
       },
       boxShadow: {
+        xs: "var(--shadow-xs)",
         soft: "var(--shadow-soft)",
         card: "var(--shadow-card)",
         elevated: "var(--shadow-elevated)",
+        glow: "var(--shadow-glow)",
       },
       keyframes: {
         "accordion-down": {

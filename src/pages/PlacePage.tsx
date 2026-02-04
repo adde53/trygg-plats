@@ -5,8 +5,10 @@ import { MapView } from '@/components/MapView';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { getPlaceBySlug, getPlaceTypeLabel, getPlaceTypeEmoji } from '@/data/places';
-import { 
+import { getPlaceTypeLabel, getPlaceTypeEmoji } from '@/data/places';
+import { usePlaces } from '@/hooks/usePlaces';
+import { CITY_BBOXES } from '@/lib/overpass';
+import {
   ChevronRight, 
   MapPin, 
   Clock, 
@@ -14,13 +16,35 @@ import {
   Navigation, 
   Flag,
   ExternalLink,
-  Building
+  Building,
+  Loader2
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function PlacePage() {
   const { placeSlug } = useParams<{ placeSlug: string }>();
-  const place = placeSlug ? getPlaceBySlug(placeSlug) : undefined;
+
+  // Get all places from API
+  const { data: places = [], isLoading } = usePlaces();
+  const place = places.find(p => p.slug === placeSlug);
+
+  // Get city name
+  const cityName = place?.city || (place?.citySlug && CITY_BBOXES[place.citySlug]?.name) || 'Okänd stad';
+
+  if (isLoading) {
+    return (
+      <>
+        <Header />
+        <main className="min-h-[60vh] flex items-center justify-center">
+          <div className="text-center">
+            <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto mb-4" />
+            <p className="text-muted-foreground">Laddar plats...</p>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   if (!place) {
     return (
@@ -70,7 +94,7 @@ export default function PlacePage() {
                   to={`/${place.citySlug}`} 
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {place.city}
+                  {cityName}
                 </Link>
               </li>
               <ChevronRight className="h-4 w-4 text-muted-foreground" />
@@ -109,19 +133,19 @@ export default function PlacePage() {
                       <MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
                       <div>
                         <p className="font-medium text-foreground">{place.address}</p>
-                        <p className="text-sm text-muted-foreground">{place.city}</p>
+                        <p className="text-sm text-muted-foreground">{cityName}</p>
                       </div>
                     </div>
                   )}
 
-                  {place.openHours && (
+                  {(place.openHours || place.openingHours) && (
                     <div className="flex items-center gap-3">
                       <Clock className="h-5 w-5 text-muted-foreground" />
-                      <p className="text-foreground">{place.openHours}</p>
+                      <p className="text-foreground">{place.openHours || place.openingHours}</p>
                     </div>
                   )}
 
-                  {place.accessible && (
+                  {(place.accessible || place.accessibility) && (
                     <div className="flex items-center gap-3">
                       <Accessibility className="h-5 w-5 text-muted-foreground" />
                       <p className="text-foreground">Tillgänglighetsanpassat</p>
@@ -203,11 +227,11 @@ export default function PlacePage() {
         <section className="py-12 bg-cream-dark">
           <div className="container text-center">
             <h2 className="font-display text-xl font-bold text-foreground mb-4">
-              Fler platser i {place.city}
+              Fler platser i {cityName}
             </h2>
             <Button variant="default" asChild>
               <Link to={`/${place.citySlug}`}>
-                Se alla platser i {place.city}
+                Se alla platser i {cityName}
               </Link>
             </Button>
           </div>

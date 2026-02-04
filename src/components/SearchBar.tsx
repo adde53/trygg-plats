@@ -64,16 +64,16 @@ export function SearchBar({
       className={`relative flex items-center gap-3 ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
+      transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
     >
       <div className="relative flex-1">
-        <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+        <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
-          className="search-input w-full pl-14 pr-4"
+          className="search-input w-full pl-16 pr-5 text-base"
           aria-label="Sök efter amningsrum eller skötrum"
         />
       </div>
@@ -84,7 +84,7 @@ export function SearchBar({
           variant="soft"
           size="lg"
           onClick={handleLocateMe}
-          className="hidden sm:flex gap-2"
+          className="hidden sm:flex gap-2 font-bold"
           aria-label="Hitta nära mig"
         >
           <Navigation className="h-5 w-5" />
@@ -92,7 +92,7 @@ export function SearchBar({
         </Button>
       )}
       
-      <Button type="submit" variant="hero" size="lg" className="gap-2">
+      <Button type="submit" variant="hero" size="lg" className="gap-2 font-bold">
         <MapPin className="h-5 w-5" />
         <span className="hidden sm:inline">Sök</span>
       </Button>

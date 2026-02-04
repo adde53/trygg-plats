@@ -11,68 +11,84 @@
 
 @layer base {
   :root {
-    /* Warm cream background */
-    --background: 40 33% 98%;
-    --foreground: 160 25% 20%;
+    /* Soft natural cream background with warmth */
+    --background: 42 45% 97%;
+    --foreground: 160 30% 18%;
 
-    /* Soft sage card */
+    /* Pure white cards with subtle tint */
     --card: 0 0% 100%;
-    --card-foreground: 160 25% 20%;
+    --card-foreground: 160 30% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 160 25% 20%;
+    --popover-foreground: 160 30% 18%;
 
-    /* Calming sage green - primary */
-    --primary: 160 35% 45%;
+    /* Refined sage green - primary with more depth */
+    --primary: 158 42% 42%;
     --primary-foreground: 0 0% 100%;
 
-    /* Warm peach - secondary */
-    --secondary: 25 80% 92%;
-    --secondary-foreground: 25 50% 35%;
+    /* Warm peachy secondary */
+    --secondary: 24 85% 90%;
+    --secondary-foreground: 24 60% 30%;
 
-    /* Soft muted tones */
-    --muted: 160 15% 94%;
-    --muted-foreground: 160 15% 45%;
+    /* Sophisticated muted tones */
+    --muted: 42 30% 95%;
+    --muted-foreground: 160 12% 48%;
 
-    /* Accent - soft coral */
-    --accent: 15 70% 60%;
+    /* Accent - refined coral */
+    --accent: 12 75% 62%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 160 20% 88%;
-    --input: 160 20% 88%;
-    --ring: 160 35% 45%;
+    --border: 42 25% 90%;
+    --input: 42 25% 92%;
+    --ring: 158 42% 42%;
 
     --radius: 1rem;
 
-    /* Custom colors for the site */
-    --sage: 160 35% 45%;
-    --sage-light: 160 30% 92%;
-    --sage-dark: 160 40% 30%;
-    
-    --peach: 25 80% 92%;
-    --peach-dark: 25 60% 75%;
-    
-    --coral: 15 70% 60%;
-    --coral-light: 15 70% 90%;
-    
-    --cream: 40 33% 98%;
-    --cream-dark: 40 25% 92%;
-    
-    --sky: 200 60% 94%;
-    --sky-dark: 200 50% 50%;
+    /* Enhanced natural color palette */
+    --sage: 158 42% 42%;
+    --sage-light: 158 35% 94%;
+    --sage-medium: 158 38% 65%;
+    --sage-dark: 158 45% 28%;
 
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(160 30% 92%) 0%, hsl(25 80% 95%) 50%, hsl(200 60% 96%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(160 20% 98%) 100%);
-    --gradient-button: linear-gradient(135deg, hsl(160 35% 45%) 0%, hsl(160 40% 38%) 100%);
+    --peach: 24 85% 90%;
+    --peach-medium: 24 75% 80%;
+    --peach-dark: 24 65% 70%;
 
-    /* Shadows */
-    --shadow-soft: 0 4px 20px -4px hsl(160 30% 50% / 0.15);
-    --shadow-card: 0 8px 30px -8px hsl(160 30% 40% / 0.12);
-    --shadow-elevated: 0 20px 50px -15px hsl(160 30% 40% / 0.2);
+    --coral: 12 75% 62%;
+    --coral-light: 12 75% 92%;
+    --coral-medium: 12 70% 75%;
+
+    --cream: 42 45% 97%;
+    --cream-medium: 42 38% 94%;
+    --cream-dark: 42 32% 88%;
+
+    --sky: 202 65% 92%;
+    --sky-medium: 202 55% 75%;
+    --sky-dark: 202 50% 50%;
+
+    --mint: 168 45% 88%;
+    --lavender: 250 45% 92%;
+
+    /* Beautiful natural gradients */
+    --gradient-hero: linear-gradient(145deg,
+      hsl(158 35% 94%) 0%,
+      hsl(42 45% 96%) 35%,
+      hsl(24 75% 94%) 65%,
+      hsl(202 60% 95%) 100%);
+    --gradient-card: linear-gradient(165deg, hsl(0 0% 100%) 0%, hsl(158 30% 98%) 100%);
+    --gradient-button: linear-gradient(135deg, hsl(158 42% 42%) 0%, hsl(158 48% 35%) 100%);
+    --gradient-peach: linear-gradient(135deg, hsl(24 85% 90%) 0%, hsl(24 80% 85%) 100%);
+    --gradient-sky: linear-gradient(135deg, hsl(202 65% 92%) 0%, hsl(202 60% 87%) 100%);
+
+    /* Refined shadows with natural depth */
+    --shadow-xs: 0 1px 3px hsl(160 30% 40% / 0.04), 0 1px 2px hsl(160 30% 40% / 0.06);
+    --shadow-soft: 0 4px 12px -2px hsl(160 35% 45% / 0.08), 0 2px 6px -2px hsl(160 35% 45% / 0.05);
+    --shadow-card: 0 10px 30px -8px hsl(160 35% 35% / 0.12), 0 4px 12px -4px hsl(160 35% 35% / 0.08);
+    --shadow-elevated: 0 20px 60px -12px hsl(160 35% 35% / 0.25), 0 8px 24px -6px hsl(160 35% 35% / 0.12);
+    --shadow-glow: 0 0 24px hsl(158 42% 42% / 0.15);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -167,6 +183,16 @@
 @layer components {
   .hero-gradient {
     background: var(--gradient-hero);
+    position: relative;
+  }
+
+  .hero-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 50%, hsl(158 45% 85% / 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, hsl(24 80% 88% / 0.3) 0%, transparent 50%);
+    pointer-events: none;
   }
 
   .card-gradient {
@@ -175,6 +201,10 @@
 
   .btn-gradient {
     background: var(--gradient-button);
+  }
+
+  .shadow-xs {
+    box-shadow: var(--shadow-xs);
   }
 
   .shadow-soft {
@@ -189,46 +219,81 @@
     box-shadow: var(--shadow-elevated);
   }
 
-  /* Icon badge styles */
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Icon badge styles with gradients */
   .icon-badge {
-    @apply inline-flex items-center justify-center rounded-full p-3;
+    @apply inline-flex items-center justify-center rounded-full p-3 shadow-soft transition-all duration-300;
   }
 
   .icon-badge-nursing {
-    @apply bg-peach text-peach-foreground;
+    background: var(--gradient-peach);
+    @apply text-peach-foreground;
   }
 
   .icon-badge-changing {
-    @apply bg-sky text-sky-foreground;
+    background: var(--gradient-sky);
+    @apply text-sky-foreground;
   }
 
-  /* Map container */
+  /* Map container with enhanced styling */
   .map-container {
-    @apply rounded-2xl overflow-hidden shadow-card;
+    @apply rounded-2xl overflow-hidden shadow-card ring-1 ring-border/50;
   }
 
-  /* Search input styling */
+  /* Enhanced search input */
   .search-input {
-    @apply bg-card border-2 border-sage-light rounded-2xl px-6 py-4 text-lg shadow-soft transition-all duration-300;
+    @apply bg-card border-2 border-border rounded-2xl px-6 py-4 text-lg shadow-soft
+           transition-all duration-300 placeholder:text-muted-foreground/60;
+  }
+
+  .search-input:hover {
+    @apply border-sage-light shadow-card;
   }
 
   .search-input:focus {
-    @apply border-primary ring-4 ring-primary/10 outline-none;
+    @apply border-primary ring-4 ring-primary/10 outline-none shadow-card;
   }
 
-  /* City card */
+  /* Refined city card with better hover effect */
   .city-card {
-    @apply bg-card rounded-2xl p-6 shadow-card transition-all duration-300 hover:shadow-elevated hover:-translate-y-1;
+    @apply bg-card rounded-2xl p-6 shadow-card border border-border/30
+           transition-all duration-300 ease-out
+           hover:shadow-elevated hover:-translate-y-1.5 hover:border-primary/20;
   }
 
-  /* Place card */
+  /* Enhanced place card */
   .place-card {
-    @apply bg-card rounded-xl p-4 shadow-soft border border-border/50 transition-all duration-200 hover:shadow-card hover:border-primary/30;
+    @apply bg-card rounded-xl p-4 shadow-soft border border-border/40
+           transition-all duration-300 ease-out
+           hover:shadow-card hover:border-primary/30 hover:-translate-y-0.5;
   }
 
-  /* FAQ accordion */
+  /* FAQ accordion with subtle effects */
   .faq-item {
-    @apply bg-card rounded-xl border border-border/50 overflow-hidden;
+    @apply bg-card rounded-xl border border-border/50 overflow-hidden shadow-xs
+           transition-all duration-200 hover:shadow-soft;
+  }
+
+  /* Feature badge with glass effect */
+  .feature-badge {
+    @apply inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm
+           rounded-full px-4 py-2 shadow-soft border border-border/50;
+  }
+
+  /* Decorative blob backgrounds */
+  .blob-bg-sage {
+    background: radial-gradient(ellipse at center, hsl(158 35% 94%) 0%, transparent 70%);
+  }
+
+  .blob-bg-peach {
+    background: radial-gradient(ellipse at center, hsl(24 75% 94%) 0%, transparent 70%);
+  }
+
+  .blob-bg-sky {
+    background: radial-gradient(ellipse at center, hsl(202 60% 95%) 0%, transparent 70%);
   }
 }
 
@@ -245,8 +310,16 @@
     background-color: hsl(var(--sage-light));
   }
 
+  .bg-sage-medium {
+    background-color: hsl(var(--sage-medium));
+  }
+
   .bg-peach {
     background-color: hsl(var(--peach));
+  }
+
+  .bg-peach-medium {
+    background-color: hsl(var(--peach-medium));
   }
 
   .bg-coral {
@@ -261,12 +334,24 @@
     background-color: hsl(var(--cream));
   }
 
+  .bg-cream-medium {
+    background-color: hsl(var(--cream-medium));
+  }
+
   .bg-cream-dark {
     background-color: hsl(var(--cream-dark));
   }
 
   .bg-sky {
     background-color: hsl(var(--sky));
+  }
+
+  .bg-mint {
+    background-color: hsl(var(--mint));
+  }
+
+  .bg-lavender {
+    background-color: hsl(var(--lavender));
   }
 
   .text-sage {
@@ -287,6 +372,41 @@
 
   .border-sage-light {
     border-color: hsl(var(--sage-light));
+  }
+
+  /* Gradient backgrounds */
+  .bg-gradient-sage {
+    background: linear-gradient(135deg, hsl(var(--sage-light)) 0%, hsl(var(--sage-medium)) 100%);
+  }
+
+  .bg-gradient-peach {
+    background: var(--gradient-peach);
+  }
+
+  .bg-gradient-sky {
+    background: var(--gradient-sky);
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-card/80 backdrop-blur-md border border-border/50;
+  }
+
+  /* Animated gradient borders */
+  @keyframes gradient-rotate {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .border-gradient-animate {
+    background: linear-gradient(90deg,
+      hsl(var(--sage)),
+      hsl(var(--coral)),
+      hsl(var(--sage))
+    );
+    background-size: 200% 200%;
+    animation: gradient-rotate 3s ease infinite;
   }
 }
 
