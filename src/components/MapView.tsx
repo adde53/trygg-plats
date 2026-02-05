@@ -62,6 +62,7 @@ interface MapViewProps {
   className?: string;
   height?: string;
   showUserLocation?: boolean;
+  interactive?: boolean;
 }
 
 // Component to handle map updates
@@ -110,7 +111,8 @@ export function MapView({
   zoom = 5,
   className = "",
   height = "400px",
-  showUserLocation = false
+  showUserLocation = false,
+  interactive = true
 }: MapViewProps) {
   const [map, setMap] = useState<L.Map | null>(null);
 
@@ -120,7 +122,11 @@ export function MapView({
         center={center}
         zoom={zoom}
         className={`h-full w-full ${className.includes('rounded-none') ? '' : 'rounded-2xl'}`}
-        scrollWheelZoom={true}
+        scrollWheelZoom={interactive}
+        dragging={interactive}
+        touchZoom={interactive}
+        doubleClickZoom={interactive}
+        zoomControl={interactive}
         ref={setMap}
       >
         <TileLayer
