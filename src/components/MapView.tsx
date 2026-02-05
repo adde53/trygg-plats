@@ -66,12 +66,31 @@ interface MapViewProps {
 }
 
 // Component to handle map updates
-function MapUpdater({ center, zoom }: { center: [number, number]; zoom: number }) {
+function MapUpdater({ center, zoom, interactive }: { center: [number, number]; zoom: number; interactive: boolean }) {
   const map = useMap();
   
   useEffect(() => {
     map.setView(center, zoom);
   }, [center, zoom, map]);
+
+  // Enable/disable map interactions dynamically
+  useEffect(() => {
+    if (interactive) {
+      map.scrollWheelZoom.enable();
+      map.dragging.enable();
+      map.touchZoom.enable();
+      map.doubleClickZoom.enable();
+      map.boxZoom.enable();
+      map.keyboard.enable();
+    } else {
+      map.scrollWheelZoom.disable();
+      map.dragging.disable();
+      map.touchZoom.disable();
+      map.doubleClickZoom.disable();
+      map.boxZoom.disable();
+      map.keyboard.disable();
+    }
+  }, [interactive, map]);
   
   return null;
 }
@@ -133,7 +152,7 @@ export function MapView({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <MapUpdater center={center} zoom={zoom} />
+        <MapUpdater center={center} zoom={zoom} interactive={interactive} />
         
         {places.map((place) => (
           <Marker
