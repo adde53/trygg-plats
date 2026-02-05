@@ -14,18 +14,6 @@ const Index = () => {
   const { data: places = [], isLoading } = usePlaces();
   const [mapActivated, setMapActivated] = useState(false);
 
-  // Lock scroll until map is activated
-  useEffect(() => {
-    if (!mapActivated) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [mapActivated]);
-
   return (
     <>
       <Header />
@@ -79,6 +67,7 @@ const Index = () => {
               height="100%"
               showUserLocation
               className="rounded-none"
+              interactive={mapActivated}
             />
             
             {/* Stats badge */}
