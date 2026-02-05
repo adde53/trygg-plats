@@ -84,43 +84,46 @@ function determineType(tags: Record<string, string>): 'nursing' | 'changing' | '
 
 // Generate a name for the place
 function generateName(tags: Record<string, string>, type: 'nursing' | 'changing' | 'both'): string {
-  if (tags['name']) return tags['name'];
-  
-  const location = tags['changing_table:location'] || tags['location'] || '';
-  const amenity = tags['amenity'] || '';
-  
-  let baseName = '';
-  
-  if (type === 'nursing') {
-    baseName = 'Amningsrum';
-  } else if (type === 'changing') {
-    baseName = 'Skötrum';
-  } else {
-    baseName = 'Amnings- och skötrum';
+  // If there's a proper name, use it directly
+  if (tags['name'] && !tags['name'].includes('_')) {
+    return tags['name'];
   }
   
-  if (tags['brand'] || tags['operator']) {
-    return `${baseName} – ${tags['brand'] || tags['operator']}`;
+  // Get location context
+  const brand = tags['brand'] || tags['operator'];
+  const locationTag = tags['changing_table:location'] || tags['location'] || '';
+  
+  // Human-readable location mapping
+  const locationNames: Record<string, string> = {
+    'mall': 'Köpcentrum',
+    'shop': 'Butik',
+    'airport': 'Flygplats',
+    'train_station': 'Tågstation',
+    'restaurant': 'Restaurang',
+    'supermarket': 'Matbutik',
+    'department_store': 'Varuhus',
+    'wheelchair_toilet': 'Handikapptoalett',
+    'male_toilet': 'Herrtoalett',
+    'female_toilet': 'Damtoalett',
+    'unisex_toilet': 'Unisextoalett',
+    'dedicated_room': 'Separat rum',
+  };
+  
+  // Build descriptive name
+  if (brand) {
+    return brand;
   }
   
-  if (location) {
-    const locationNames: Record<string, string> = {
-      'mall': 'köpcentrum',
-      'shop': 'butik',
-      'airport': 'flygplats',
-      'train_station': 'tågstation',
-      'restaurant': 'restaurang',
-      'supermarket': 'matbutik',
-      'department_store': 'varuhus',
-    };
-    return `${baseName} – ${locationNames[location] || location}`;
+  if (locationTag && locationNames[locationTag]) {
+    return locationNames[locationTag];
   }
   
-  if (amenity === 'toilets') {
-    return `${baseName} – toalett`;
+  if (tags['amenity'] === 'toilets') {
+    return 'Offentlig toalett';
   }
   
-  return baseName;
+  // Default to a simple descriptive name
+  return 'Plats';
 }
 
 // Generate slug from name and id

@@ -124,7 +124,7 @@ export default function PlacePage() {
                 </div>
 
                 <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-                  {getPlaceTypeLabel(place.type)} – {place.name}
+                  {place.name}
                 </h1>
 
                 <div className="space-y-4 mb-8">
