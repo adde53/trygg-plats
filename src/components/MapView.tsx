@@ -119,7 +119,7 @@ export function MapView({
       <MapContainer
         center={center}
         zoom={zoom}
-        className="h-full w-full rounded-2xl"
+        className={`h-full w-full ${className.includes('rounded-none') ? '' : 'rounded-2xl'}`}
         scrollWheelZoom={true}
         ref={setMap}
       >

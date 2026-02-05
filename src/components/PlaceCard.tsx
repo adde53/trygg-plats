@@ -30,42 +30,47 @@ export function PlaceCard({ place, index = 0, showDistance, distance }: PlaceCar
       transition={{ duration: 0.4, delay: index * 0.05, ease: "easeOut" }}
     >
       <Link to={`/plats/${place.slug}`}>
-        <Card variant="place" className="group">
-          <div className="flex items-start justify-between gap-4">
+        <Card variant="place" className="group p-5">
+          <div className="flex items-start gap-4">
+            {/* Icon */}
+            <div className={`flex-shrink-0 w-14 h-14 rounded-2xl ${typeColors[place.type]} flex items-center justify-center shadow-soft`}>
+              <span className="text-2xl" aria-hidden="true">
+                {getPlaceTypeEmoji(place.type)}
+              </span>
+            </div>
+            
+            {/* Content */}
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-2xl" aria-hidden="true">
-                  {getPlaceTypeEmoji(place.type)}
-                </span>
-                <Badge className={`${typeColors[place.type]} shadow-xs font-semibold`}>
+              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                <Badge className={`${typeColors[place.type]} shadow-xs font-semibold text-xs`}>
                   {getPlaceTypeLabel(place.type)}
                 </Badge>
                 {(place.accessible || place.accessibility) && (
-                  <Badge variant="outline" className="gap-1.5 border-sage-light">
-                    <Accessibility className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only font-medium">Tillgängligt</span>
+                  <Badge variant="outline" className="gap-1 border-sage-light text-xs">
+                    <Accessibility className="h-3 w-3" />
+                    <span className="hidden sm:inline">Tillgängligt</span>
                   </Badge>
                 )}
               </div>
               
-              <h3 className="font-display text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300 truncate mb-2">
+              <h3 className="font-display text-base font-bold text-foreground group-hover:text-primary transition-colors duration-300 truncate mb-1">
                 {place.name}
               </h3>
               
-              <div className="flex items-center gap-1.5 mt-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4 flex-shrink-0 text-sage" />
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <MapPin className="h-3.5 w-3.5 flex-shrink-0 text-sage" />
                 <span className="truncate">{place.address || cityName}</span>
               </div>
               
               {(place.openHours || place.openingHours) && (
-                <div className="flex items-center gap-1.5 mt-2 text-sm text-muted-foreground">
-                  <Clock className="h-4 w-4 flex-shrink-0 text-sage" />
-                  <span>{place.openHours || place.openingHours}</span>
+                <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3 flex-shrink-0 text-sage" />
+                  <span className="truncate">{place.openHours || place.openingHours}</span>
                 </div>
               )}
 
               {showDistance && distance !== undefined && (
-                <p className="mt-3 text-sm font-bold text-primary">
+                <p className="mt-2 text-sm font-bold text-primary">
                   {distance < 1000
                     ? `${Math.round(distance)} m bort`
                     : `${(distance / 1000).toFixed(1)} km bort`
@@ -74,7 +79,8 @@ export function PlaceCard({ place, index = 0, showDistance, distance }: PlaceCar
               )}
             </div>
             
-            <ChevronRight className="h-6 w-6 text-muted-foreground group-hover:text-primary group-hover:translate-x-1.5 transition-all duration-300 flex-shrink-0 mt-1" />
+            {/* Arrow */}
+            <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300 flex-shrink-0 mt-4" />
           </div>
         </Card>
       </Link>

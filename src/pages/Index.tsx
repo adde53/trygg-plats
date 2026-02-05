@@ -16,116 +16,60 @@ const Index = () => {
     <>
       <Header />
       <main>
-        {/* Hero Section */}
-        <section className="hero-gradient py-20 md:py-28 lg:py-36 relative overflow-hidden">
-          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.05]">
-            <img
-              src={heroImage} 
-              alt="" 
-              className="w-full h-full object-cover object-right-bottom"
-              aria-hidden="true"
+        {/* Hero Map Section */}
+        <section className="relative">
+          {/* Search overlay on map */}
+          <div className="absolute top-0 left-0 right-0 z-20 pt-6 pb-4 bg-gradient-to-b from-background/95 via-background/80 to-transparent">
+            <div className="container">
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="max-w-2xl mx-auto"
+              >
+                <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4 text-center">
+                  Hitta amningsrum & skötrum
+                </h1>
+                <SearchBar className="shadow-elevated" />
+              </motion.div>
+            </div>
+          </div>
+          
+          {/* Full-width map */}
+          <div className="relative">
+            {isLoading && (
+              <div className="absolute inset-0 bg-background/60 backdrop-blur-md flex items-center justify-center z-10">
+                <div className="flex items-center gap-3 glass px-6 py-3 rounded-full shadow-card">
+                  <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                  <span className="text-sm font-semibold">Hämtar platser från OpenStreetMap...</span>
+                </div>
+              </div>
+            )}
+            <MapView
+              places={places}
+              center={[62.5, 17.5]}
+              zoom={5}
+              height="85vh"
+              showUserLocation
+              className="rounded-none"
             />
           </div>
-          <div className="container relative z-10">
-            <motion.div 
-              className="max-w-4xl mx-auto text-center"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-            >
-              <motion.div
-                className="feature-badge mb-8 inline-flex"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <span className="text-2xl">👶</span>
-                <span className="text-sm font-semibold text-muted-foreground">
-                  {isLoading ? 'Laddar...' : `${places.length}+ platser i hela Sverige`}
-                </span>
-              </motion.div>
-
-              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-8 text-balance leading-tight tracking-tight">
-                Amningsrum och skötrum i hela Sverige
-              </h1>
-              
-              <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto text-balance leading-relaxed">
-                Hitta snabbt närmaste amningsrum eller skötrum.
-                Sök på stad, adress eller använd din position.
-              </p>
-              
-              <SearchBar className="max-w-2xl mx-auto" />
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Features */}
-        <section className="py-16 md:py-20 bg-card border-y border-border/50">
-          <div className="container">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10">
-              {[
-                { icon: MapPin, label: 'Hela Sverige', desc: 'Alla städer', gradient: 'bg-gradient-sage' },
-                { icon: Baby, label: 'Amning & blöjbyte', desc: 'Båda typer', gradient: 'bg-gradient-peach' },
-                { icon: Shield, label: 'Tillgänglighet', desc: 'Rullstolsanpassat', gradient: 'bg-gradient-sky' },
-                { icon: Clock, label: 'Öppettider', desc: 'Alltid uppdaterat', gradient: 'bg-mint' },
-              ].map((feature, i) => (
-                <motion.div 
-                  key={i}
-                  className="flex flex-col items-center text-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
-                >
-                  <div className={`h-16 w-16 rounded-2xl ${feature.gradient} flex items-center justify-center mb-4 shadow-soft transition-all duration-300 hover:shadow-card hover:-translate-y-1`}>
-                    <feature.icon className="h-7 w-7 text-sage-dark" />
-                  </div>
-                  <h3 className="font-display font-bold text-foreground text-lg mb-1">{feature.label}</h3>
-                  <p className="text-sm text-muted-foreground">{feature.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Map Preview */}
-        <section className="py-20 md:py-28" aria-labelledby="map-heading">
-          <div className="container">
-            <div className="text-center mb-12">
-              <h2 id="map-heading" className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
-                Utforska kartan
-              </h2>
-              <p className="text-muted-foreground text-xl max-w-2xl mx-auto leading-relaxed">
-                Se alla amningsrum och skötrum på kartan. Klicka på en markör för mer information.
-              </p>
-            </div>
-            
+          
+          {/* Stats bar */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
             <motion.div
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="relative"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="glass px-6 py-3 rounded-full shadow-card flex items-center gap-4"
             >
-              {isLoading && (
-                <div className="absolute inset-0 bg-background/60 backdrop-blur-md rounded-3xl flex items-center justify-center z-10">
-                  <div className="flex items-center gap-3 glass px-6 py-3 rounded-full shadow-card">
-                    <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                    <span className="text-sm font-semibold">Hämtar platser från OpenStreetMap...</span>
-                  </div>
-                </div>
-              )}
-              <div className="rounded-3xl overflow-hidden shadow-elevated ring-1 ring-border/30">
-                <MapView
-                  places={places}
-                  center={[59.3293, 18.0686]}
-                  zoom={6}
-                  height="550px"
-                  showUserLocation
-                />
-              </div>
+              <span className="text-2xl">👶</span>
+              <span className="text-sm font-semibold text-foreground">
+                {isLoading ? 'Laddar...' : `${places.length} platser i hela Sverige`}
+              </span>
             </motion.div>
           </div>
         </section>
-
         {/* Cities Grid */}
         <section className="py-20 md:py-28 bg-cream-medium" aria-labelledby="cities-heading">
           <div className="container">
