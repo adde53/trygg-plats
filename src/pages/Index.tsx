@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { SearchBar } from '@/components/SearchBar';
@@ -7,67 +8,88 @@ import { FAQ } from '@/components/FAQ';
 import { cities } from '@/data/places';
 import { usePlaces } from '@/hooks/usePlaces';
 import { motion } from 'framer-motion';
-import { MapPin, Baby, Shield, Clock, Loader2 } from 'lucide-react';
-import heroImage from '@/assets/hero-illustration.png';
+import { Loader2, Hand } from 'lucide-react';
 
 const Index = () => {
   const { data: places = [], isLoading } = usePlaces();
+  const [mapActivated, setMapActivated] = useState(false);
+
+  // Lock scroll until map is activated
+  useEffect(() => {
+    if (!mapActivated) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mapActivated]);
+
   return (
     <>
       <Header />
       <main>
-        {/* Hero Map Section */}
-        <section className="relative">
-          {/* Search overlay on map */}
-          <div className="absolute top-0 left-0 right-0 z-20 pt-6 pb-4 bg-gradient-to-b from-background/95 via-background/80 to-transparent">
-            <div className="container">
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="max-w-2xl mx-auto"
-              >
-                <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4 text-center">
+        {/* Hero Map Section - Full viewport */}
+        <section className="relative h-[100dvh] flex flex-col">
+          {/* Top bar with search */}
+          <div className="bg-background border-b border-border/50 px-4 py-4 md:py-5 z-30">
+            <div className="max-w-xl mx-auto space-y-3">
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-2xl">👶</span>
+                <h1 className="font-display text-lg md:text-xl font-bold text-foreground">
                   Hitta amningsrum & skötrum
                 </h1>
-                <SearchBar className="shadow-elevated" />
-              </motion.div>
+              </div>
+              <SearchBar />
             </div>
           </div>
           
-          {/* Full-width map */}
-          <div className="relative">
+          {/* Map fills remaining space */}
+          <div className="flex-1 relative" onClick={() => setMapActivated(true)}>
+            {/* Click to activate overlay */}
+            {!mapActivated && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="absolute inset-0 z-20 flex items-center justify-center bg-background/20 backdrop-blur-[2px] cursor-pointer"
+                onClick={() => setMapActivated(true)}
+              >
+                <div className="glass px-6 py-4 rounded-2xl shadow-card text-center">
+                  <Hand className="h-8 w-8 text-primary mx-auto mb-2" />
+                  <p className="font-semibold text-foreground">Klicka för att utforska kartan</p>
+                  <p className="text-sm text-muted-foreground">Scrolla efter att du klickat</p>
+                </div>
+              </motion.div>
+            )}
+
             {isLoading && (
               <div className="absolute inset-0 bg-background/60 backdrop-blur-md flex items-center justify-center z-10">
                 <div className="flex items-center gap-3 glass px-6 py-3 rounded-full shadow-card">
                   <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                  <span className="text-sm font-semibold">Hämtar platser från OpenStreetMap...</span>
+                  <span className="text-sm font-semibold">Hämtar platser...</span>
                 </div>
               </div>
             )}
+            
             <MapView
               places={places}
               center={[62.5, 17.5]}
               zoom={5}
-              height="85vh"
+              height="100%"
               showUserLocation
               className="rounded-none"
             />
-          </div>
-          
-          {/* Stats bar */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-              className="glass px-6 py-3 rounded-full shadow-card flex items-center gap-4"
-            >
-              <span className="text-2xl">👶</span>
-              <span className="text-sm font-semibold text-foreground">
-                {isLoading ? 'Laddar...' : `${places.length} platser i hela Sverige`}
-              </span>
-            </motion.div>
+            
+            {/* Stats badge */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
+              <div className="glass px-4 py-2 rounded-full shadow-card flex items-center gap-2">
+                <span className="text-lg">📍</span>
+                <span className="text-sm font-medium text-foreground">
+                  {isLoading ? 'Laddar...' : `${places.length} platser`}
+                </span>
+              </div>
+            </div>
           </div>
         </section>
         {/* Cities Grid */}
