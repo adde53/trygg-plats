@@ -21,7 +21,7 @@ const Index = () => {
         {/* Hero Map Section - Full viewport */}
         <section className="relative h-[100dvh] flex flex-col">
           {/* Top bar with search */}
-          <div className="bg-background border-b border-border/50 px-4 py-4 md:py-5 z-30">
+          <div className="bg-background border-b border-border/50 px-4 py-4 md:py-5 z-50 relative">
             <div className="max-w-xl mx-auto space-y-3">
               <div className="flex items-center justify-center gap-2">
                 <span className="text-2xl">👶</span>
@@ -104,40 +104,6 @@ const Index = () => {
         {/* FAQ */}
         <FAQ />
 
-        {/* CTA Section */}
-        <section className="py-20 md:py-28 relative overflow-hidden">
-          <div className="absolute inset-0 bg-sage-light/40"></div>
-          <div className="absolute top-10 left-10 w-96 h-96 blob-bg-sage blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-96 h-96 blob-bg-peach blur-3xl"></div>
-          <div className="container relative z-10">
-            <motion.div
-              className="max-w-3xl mx-auto text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-peach shadow-card mb-8">
-                <span className="text-5xl">🍼</span>
-              </div>
-              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 text-balance tracking-tight">
-                Känner du till ett amningsrum?
-              </h2>
-              <p className="text-muted-foreground text-lg md:text-xl mb-8 leading-relaxed max-w-2xl mx-auto">
-                Hjälp andra föräldrar genom att lägga till platser som saknas.
-                Ju fler som bidrar, desto bättre blir tjänsten för alla.
-              </p>
-              <a 
-                href="https://www.openstreetmap.org" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-bold text-lg shadow-elevated hover:shadow-glow hover:-translate-y-1 transition-all duration-300"
-              >
-                Lägg till på OpenStreetMap
-              </a>
-            </motion.div>
-          </div>
-        </section>
       </main>
       <Footer />
     </>
