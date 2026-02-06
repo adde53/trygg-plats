@@ -36,9 +36,6 @@ export function Header() {
           >
             Malmö
           </Link>
-          <Button variant="soft" size="sm" asChild className="ml-2">
-            <Link to="/lagg-till">Lägg till plats</Link>
-          </Button>
         </nav>
 
         {/* Mobile menu button */}
@@ -86,12 +83,6 @@ export function Header() {
             >
               Uppsala
             </Link>
-            <hr className="border-border my-2" />
-            <Button variant="soft" asChild className="w-full">
-              <Link to="/lagg-till" onClick={() => setIsMenuOpen(false)}>
-                Lägg till plats
-              </Link>
-            </Button>
           </div>
         </nav>
       )}
