@@ -53,18 +53,6 @@ export function Footer() {
             <h3 className="font-display font-bold text-foreground mb-5 text-lg">Information</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/om-oss" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium inline-flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 rounded-full bg-sage group-hover:bg-primary transition-colors"></span>
-                  Om amningsrum.se
-                </Link>
-              </li>
-              <li>
-                <Link to="/lagg-till" className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium inline-flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 rounded-full bg-sage group-hover:bg-primary transition-colors"></span>
-                  Lägg till plats
-                </Link>
-              </li>
-              <li>
                 <a 
                   href="https://www.openstreetmap.org" 
                   target="_blank" 
@@ -73,6 +61,17 @@ export function Footer() {
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-sage group-hover:bg-primary transition-colors"></span>
                   Data från OpenStreetMap
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://wiki.openstreetmap.org/wiki/Key:changing_table" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium inline-flex items-center gap-2 group"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-sage group-hover:bg-primary transition-colors"></span>
+                  Bidra med data
                 </a>
               </li>
             </ul>
