@@ -206,9 +206,9 @@ export function SearchBar({
         <Button
           type="button"
           variant="soft"
-          size="lg"
+          size="icon"
           onClick={handleLocateMe}
-          className="hidden sm:flex gap-2 font-bold"
+          className="shrink-0 h-12 w-12 md:h-auto md:w-auto md:px-4 md:gap-2"
           aria-label="Hitta nära mig"
           disabled={isLocating}
         >
@@ -217,13 +217,13 @@ export function SearchBar({
           ) : (
             <Navigation className="h-5 w-5" />
           )}
-          <span className="hidden md:inline">Nära mig</span>
+          <span className="hidden md:inline font-bold">Nära mig</span>
         </Button>
       )}
       
-      <Button type="submit" variant="hero" size="lg" className="gap-2 font-bold">
+      <Button type="submit" variant="hero" size="icon" className="shrink-0 h-12 w-12 md:h-auto md:w-auto md:px-6 md:gap-2">
         <MapPin className="h-5 w-5" />
-        <span className="hidden sm:inline">Sök</span>
+        <span className="hidden md:inline font-bold">Sök</span>
       </Button>
     </motion.form>
   );
