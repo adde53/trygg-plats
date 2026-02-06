@@ -136,7 +136,7 @@ export function MapView({
   const [map, setMap] = useState<L.Map | null>(null);
 
   return (
-    <div className={`relative map-container ${className}`} style={{ height }}>
+    <div className={`relative map-container ${className}`} style={{ height, zIndex: 0 }}>
       <MapContainer
         center={center}
         zoom={zoom}

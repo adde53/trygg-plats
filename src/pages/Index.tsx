@@ -19,9 +19,9 @@ const Index = () => {
       <Header />
       <main>
         {/* Hero Map Section - Full viewport */}
-        <section className="relative h-[100dvh] flex flex-col">
-          {/* Top bar with search */}
-          <div className="bg-background border-b border-border/50 px-4 py-4 md:py-5 z-50 relative">
+        <section className="relative h-[100dvh] flex flex-col isolate">
+          {/* Top bar with search - must be above map */}
+          <div className="bg-background border-b border-border/50 px-4 py-4 md:py-5 relative z-[1000]">
             <div className="max-w-xl mx-auto space-y-3">
               <div className="flex items-center justify-center gap-2">
                 <span className="text-2xl">👶</span>
@@ -33,8 +33,8 @@ const Index = () => {
             </div>
           </div>
           
-          {/* Map fills remaining space */}
-          <div className="flex-1 relative" onClick={() => setMapActivated(true)}>
+          {/* Map fills remaining space - lower z-index */}
+          <div className="flex-1 relative z-0" onClick={() => setMapActivated(true)}>
             {/* Click to activate overlay */}
             {!mapActivated && (
               <motion.div 
